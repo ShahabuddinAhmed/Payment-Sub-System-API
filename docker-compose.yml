@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  web:
+    container_name: paymentSubSystemService
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/server
+    environment:
+      JWT_SECRET: JwtSecretTokenWillBeHere
+      JWT_EXPIRATION: 8h
+      ACCESS_TOKEN_EXPIRATION: 120h
+      HOST: 172.17.0.1
+      PORT: 3000
+      USER_NAME: root
+      PASSWORD: root
+      DATABASE: payment

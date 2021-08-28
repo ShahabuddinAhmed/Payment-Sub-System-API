@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { LoggerModule } from './logger/logger.module';
 import { HelperModule } from './helper/helper.module';
 import { EntityModule } from './entity/entity.module';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   	imports: [
@@ -27,7 +28,8 @@ import { EntityModule } from './entity/entity.module';
 		}),
 		EntityModule,
 		LoggerModule,
-        HelperModule
+        HelperModule,
+        TransactionModule
   	],
 	controllers: [AppController],
 	providers: [AppService],

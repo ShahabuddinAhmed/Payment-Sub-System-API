@@ -20,7 +20,7 @@ import { TransactionModule } from './transaction/transaction.module';
 				password: process.env.PASSWORD,
 				database: process.env.DATABASE,
 				entities: ['dist/**/*.entity{.ts,.js}'],
-				synchronize: false, // shouldn't be synchronized as true in production - otherwise you can lose production data.
+				synchronize: true, // shouldn't be synchronized as true in production - otherwise you can lose production data.
 				extra: {
 					connectionLimit: 10
 				}

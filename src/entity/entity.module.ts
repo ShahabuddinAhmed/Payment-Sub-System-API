@@ -1,13 +1,15 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityService } from './entity.service';
-import { OptionEntity } from './entities/option.entity';
+import { InvoiceDiscountEntity } from './entities/invoice-discount.entity';
+import { TransactionEntity } from './entities/transaction.entity';
 
 @Global()
 @Module({
     imports: [
         TypeOrmModule.forFeature([
-			OptionEntity
+			InvoiceDiscountEntity,
+			TransactionEntity
 		])
     ],
     providers: [EntityService],

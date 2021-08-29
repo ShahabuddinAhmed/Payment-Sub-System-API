@@ -1,4 +1,4 @@
-import { IsNotEmpty, Length, IsEmail, IsString } from 'class-validator';
+import { IsNotEmpty, Length, IsEmail, IsString, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class InvoiceDiscountDto {
@@ -14,15 +14,13 @@ export class InvoiceDiscountDto {
         example: 10001,
         description: 'User ID'
     })
-    @IsNotEmpty()
-    @IsString()
+    @IsNumber()
     readonly userID: string;
 
     @ApiProperty({
         example: 450,
         description: 'Invoice final amount'
     })
-    @IsNotEmpty()
-    @IsString()
+    @IsNumber()
     readonly finalAmount: number;
 }

@@ -2,11 +2,11 @@ import { Exclude, plainToClass } from 'class-transformer';
 import { AppSerializer } from '../../app.serializer';
 
 class InvoiceSerializer {
-	@Exclude()
-	id: number;
+	// @Exclude()
+	// id: number;
 
-	@Exclude()
-	password: string;
+	// @Exclude()
+	// password: string;
 }
 
 export class InvoiceDiscountSerializer extends AppSerializer {

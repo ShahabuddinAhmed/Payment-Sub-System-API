@@ -19,15 +19,15 @@ export class TransactionController {
 
     @UseInterceptors(ClassSerializerInterceptor)
     @Post('check-discount')
-    @HttpCode(HttpStatus.CREATED)
+    @HttpCode(HttpStatus.OK)
     @ApiOperation({ summary: 'Check Invoice Discount' })
     @ApiCreatedResponse({})
     async checkInvoice(@Req() req: Request, @Body() invoiceDiscountDto: InvoiceDiscountDto): Promise<InvoiceDiscountSerializer> {
-        const { errMessage } = await this.authService.checkInvoice(req, invoiceDiscountDto);
+        const { errMessage, data } = await this.authService.checkInvoice(req, invoiceDiscountDto);
         if (errMessage) {
             this.loggerService.error(errMessage, 'transaction.handler.checkInvoice');
             throw new BadRequestException(errMessage);
         }
-        return new InvoiceDiscountSerializer(HttpStatus.OK, 'Invoice Discount Result', null, []);
+        return new InvoiceDiscountSerializer(HttpStatus.OK, 'Invoice Discount Result', data, []);
     }
 }

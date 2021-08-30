@@ -5,8 +5,7 @@ class InvoiceSerializer {
 	// @Exclude()
 	// id: number;
 
-	// @Exclude()
-	// password: string;
+	discount: number
 }
 
 export class InvoiceDiscountSerializer extends AppSerializer {

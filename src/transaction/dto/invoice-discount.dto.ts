@@ -15,7 +15,7 @@ export class InvoiceDiscountDto {
         description: 'User ID'
     })
     @IsNumber()
-    readonly userID: string;
+    readonly userID: number;
 
     @ApiProperty({
         example: 450,

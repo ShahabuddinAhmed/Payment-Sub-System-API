@@ -11,7 +11,13 @@ export class InvoiceDiscountEntity {
         type: 'varchar',
         nullable: false
     })
-    categoryName: string;
+    name: string;
+
+    @Column({
+        type: 'varchar',
+        nullable: false
+    })
+    productCode: string;
 
     @Column({
         type: 'int',

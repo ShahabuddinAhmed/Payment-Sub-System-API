@@ -14,43 +14,41 @@ export class TransactionService {
 
     public async checkInvoice(req: Request, invoiceDiscountDto: InvoiceDiscountDto): Promise<{errMessage: string; data: { discount: number }}> {
         const data: { discount: number } = { discount: -1 };
-		// find categoryID from productCode.
-		// if invaid productCode then return as error.
-		// lets productCode is valid. then
-		const categoryID = 5;
 		let parentID: number;
-		let discountNotFound = true;
 
-		const invoiceDiscounts = await this.entityService.invoiceDiscountRepo.find();
-		if (!invoiceDiscounts.length) {
-			return { errMessage: 'Product Category is empty', data };
+		let invoiceDiscount = await this.entityService.invoiceDiscountRepo.findOne({
+			where: { productCode: invoiceDiscountDto.productCode } });
+		if (!invoiceDiscount) {
+			return { errMessage: 'Invalid Product Code', data: null };
 		}
 
-		const checkCategory = invoiceDiscounts.find(value => value.id === categoryID);
-		if (!checkCategory) {
-			return { errMessage: 'No Product Category was found', data };
-		}
-
-		if (checkCategory.discount) {
-			const discount = this.getDiscount(invoiceDiscountDto.finalAmount, checkCategory.discount, checkCategory.discountType);
-			discountNotFound = false;
+		if (invoiceDiscount.discount) {
+			const discount = this.getDiscount(invoiceDiscountDto.finalAmount, invoiceDiscount.discount, invoiceDiscount.discountType);
 			return { errMessage: '', data: { discount } };
 		}
 
-		parentID = checkCategory.parentID;
-		while (discountNotFound) {
-			const _checkCategory = invoiceDiscounts.find(value => value.id === parentID);
-			if (_checkCategory.discount) {
-				const discount = this.getDiscount(invoiceDiscountDto.finalAmount, _checkCategory.discount, _checkCategory.discountType);
-				discountNotFound = false;
-				return { errMessage: '', data: { discount } };
-			}
-
-			if (_checkCategory.id === _checkCategory.parentID) {
-				discountNotFound = false;
-			}
-			parentID = _checkCategory.parentID;
+		if (!invoiceDiscount.parentID) {
+			return { errMessage: '', data };
 		}
+
+		parentID = invoiceDiscount.parentID;
+		while (true) {
+			invoiceDiscount = await this.entityService.invoiceDiscountRepo.findOne({ where: { id: parentID } });
+			if (!invoiceDiscount || invoiceDiscount.discount || !invoiceDiscount.parentID) {
+				break;
+			}
+			parentID = invoiceDiscount.parentID;
+		}
+
+		if (!invoiceDiscount) {
+			return { errMessage: 'Invalid Product Code', data: null };
+		}
+
+		if (invoiceDiscount.discount) {
+			const discount = this.getDiscount(invoiceDiscountDto.finalAmount, invoiceDiscount.discount, invoiceDiscount.discountType);
+			return { errMessage: '', data: { discount } };
+		}
+
 		return { errMessage: '', data };
     }
 

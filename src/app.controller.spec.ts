@@ -15,8 +15,8 @@ describe('AppController', () => {
   	});
 
 	describe('root', () => {
-		it('should return "Hello World!"', () => {
-			expect(appController.getHello()).toBe('Hello World!');
+		it('should return "Welcome To Payment Sub System API!"', () => {
+			expect(appController.getHello()).toBe('Welcome To Payment Sub System API!');
 		});
 	});
 });

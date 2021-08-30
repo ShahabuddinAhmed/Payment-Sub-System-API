@@ -7,6 +7,7 @@ import { LoggerModule } from './logger/logger.module';
 import { HelperModule } from './helper/helper.module';
 import { EntityModule } from './entity/entity.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { SeederModule } from './seeder/seeder.module';
 
 @Module({
   	imports: [
@@ -29,7 +30,8 @@ import { TransactionModule } from './transaction/transaction.module';
 		EntityModule,
 		LoggerModule,
         HelperModule,
-        TransactionModule
+        TransactionModule,
+        SeederModule
   	],
 	controllers: [AppController],
 	providers: [AppService],

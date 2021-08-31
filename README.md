@@ -35,6 +35,13 @@ $ yarn test:cov
 
 [Swagger UI Doc](http://localhost:3000/api/v1/doc)
 
+## PHP_MYADMIN
+
+`username`: root
+`password`: root
+
+[Swagger UI Doc](http://0.0.0.0:8080/index.php)
+
 ## N.B
 
 *In the `invoice_discount` table, the column `name` is considered as both `product category name` or `product name`.

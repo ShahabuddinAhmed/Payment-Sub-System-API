@@ -40,8 +40,8 @@ $ yarn test:cov
 
 ## N.B
 
-In the `invoice_discount` table, the column `name` is considered as both `product category name` or `product name`.
-In summary, All product `categories` and `products` are in the `invoice_discount` table.
+*In the `invoice_discount` table, the column `name` is considered as both `product category name` or `product name`.
+In summary, All product `categories` and `products` are in the `invoice_discount` table.*
 
 
 ## License

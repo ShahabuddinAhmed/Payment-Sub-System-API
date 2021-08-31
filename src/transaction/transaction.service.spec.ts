@@ -78,4 +78,55 @@ describe('TransactionService', () => {
 
         expect(invoiceDiscount).toEqual({ errMessage: '', data: { discount: -1 } });
     });
+
+	it('should be calculate discount price with 0', async () => {
+        const finalAmount = 1280;
+        const mockInvoiceDiscount = {
+            id: 6,
+            name: 'Electronics',
+            productCode: '371828b4abee403baaf45151d3cf5102',
+            parentID: null,
+            discount: 0,
+            discountType: DiscountType.Flat
+        };
+
+        invoiceDiscountMockRepo.findOne.mockReturnValue(mockInvoiceDiscount);
+        const discount = transactionService.getDiscount(finalAmount, mockInvoiceDiscount.discount, mockInvoiceDiscount.discountType);
+
+        expect(discount).toEqual(0);
+    });
+
+	it('should be calculate discount price with 120', async () => {
+        const finalAmount = 1280;
+        const mockInvoiceDiscount = {
+            id: 6,
+            name: 'Electronics',
+            productCode: '371828b4abee403baaf45151d3cf5102',
+            parentID: null,
+            discount: 120,
+            discountType: DiscountType.Flat
+        };
+
+        invoiceDiscountMockRepo.findOne.mockReturnValue(mockInvoiceDiscount);
+        const discount = transactionService.getDiscount(finalAmount, mockInvoiceDiscount.discount, mockInvoiceDiscount.discountType);
+
+        expect(discount).toEqual(120);
+    });
+
+	it('should be calculate discount price with 154', async () => {
+        const finalAmount = 1280;
+        const mockInvoiceDiscount = {
+            id: 6,
+            name: 'Electronics',
+            productCode: '371828b4abee403baaf45151d3cf5102',
+            parentID: null,
+            discount: 12,
+            discountType: DiscountType.Percentage
+        };
+
+        invoiceDiscountMockRepo.findOne.mockReturnValue(mockInvoiceDiscount);
+        const discount = transactionService.getDiscount(finalAmount, mockInvoiceDiscount.discount, mockInvoiceDiscount.discountType);
+
+        expect(discount).toEqual(154);
+    });
 });

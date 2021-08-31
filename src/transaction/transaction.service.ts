@@ -51,7 +51,7 @@ export class TransactionService {
 		return { errMessage: '', data };
     }
 
-	private getDiscount(amount: number, discount: number, discountType: DiscountType): number {
+	public getDiscount(amount: number, discount: number, discountType: DiscountType): number {
 		return discountType === DiscountType.Percentage ? Math.ceil(amount * (discount / 100)) : discount;
 	};
 }

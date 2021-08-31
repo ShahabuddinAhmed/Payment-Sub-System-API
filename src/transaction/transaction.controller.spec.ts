@@ -30,6 +30,9 @@ describe('TransactionController', () => {
         }).compile();
 
         transactionController = module.get<TransactionController>(TransactionController);
+        transactionService = module.get<TransactionService>(TransactionService);
+		invoiceDiscountMockRepo = module.get(getRepositoryToken(InvoiceDiscountEntity));
+        transactionMockRepo = module.get(getRepositoryToken(TransactionEntity));
     });
 
     it('should be defined', () => {
@@ -43,42 +46,39 @@ describe('TransactionController', () => {
             finalAmount: 1280
         }
 
-        const mockInvoiceDiscount = {
-            id: 4,
-            name: 'Frozen',
-            productCode: '002e3c5828f543f299045f7c8e2182e5',
-            parentID: 2,
-            discount: 6,
-            discountType: DiscountType.Percentage
-        };
+        const mockInvoiceDiscount = {	id: 5,
+			name: 'Rice',
+			productCode: '25038b03b1914d67abbb9bc1f87ec415',
+			parentID: 1,
+			discount: 120,
+			discountType: DiscountType.Flat
+		};
 
-        // invoiceDiscountMockRepo.findOne.mockReturnValue(mockInvoiceDiscount);
-        // const invoiceDiscount = await transactionService.checkInvoice(dto);
+		invoiceDiscountMockRepo.findOne.mockReturnValue(mockInvoiceDiscount);
         const checkInvoice = await transactionController.checkInvoice(dto);
 
-        expect(checkInvoice).toEqual({ errMessage: '', data: { discount: 77 } });
+        expect(checkInvoice).toEqual({ statusCode: 200, message: 'Invoice Discount Result', data: { discount: 120 }, errors: [] });
     });
 
-    // it('should be return discount amount -1', async () => {
-    //     const dto: InvoiceDiscountDto = {
-    //         productCode: '002e3c5828f543f299045f7c8e2182e5',
-    //         userID: 100001,
-    //         finalAmount: 1280
-    //     }
+    it('should be return discount amount -1', async () => {
+        const dto: InvoiceDiscountDto = {
+            productCode: '002e3c5828f543f299045f7c8e2182e5',
+            userID: 100001,
+            finalAmount: 1280
+        }
 
-    //     const mockInvoiceDiscount = {
-    //         id: 6,
-    //         name: 'Electronics',
-    //         productCode: '371828b4abee403baaf45151d3cf5102',
-    //         parentID: null,
-    //         discount: 0,
-    //         discountType: DiscountType.Flat
-    //     };
+        const mockInvoiceDiscount = {
+            id: 6,
+            name: 'Electronics',
+            productCode: '371828b4abee403baaf45151d3cf5102',
+            parentID: null,
+            discount: 0,
+            discountType: DiscountType.Flat
+        };
 
-    //     // invoiceDiscountMockRepo.findOne.mockReturnValue(mockInvoiceDiscount);
-    //     // const invoiceDiscount = await transactionService.checkInvoice(dto);
-    //     const checkInvoice = await transactionController.checkInvoice(dto);
+        invoiceDiscountMockRepo.findOne.mockReturnValue(mockInvoiceDiscount);
+        const checkInvoice = await transactionController.checkInvoice(dto);
 
-    //     expect(checkInvoice).toEqual({ errMessage: '', data: { discount: -1 } });
-    // });
+        expect(checkInvoice).toEqual({ statusCode: 200, message: 'Invoice Discount Result', data: { discount: -1 }, errors: [] });
+    });
 });

@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class InvoiceDiscountDto {
     @ApiProperty({
-        example: 'PC665k5g4f5g4y5gf',
+        example: 'a4def1759c724f40ad3081671302cd4f',
         description: 'Product Code of the Product'
     })
     @IsNotEmpty()
@@ -18,7 +18,7 @@ export class InvoiceDiscountDto {
     readonly userID: number;
 
     @ApiProperty({
-        example: 450,
+        example: 1280,
         description: 'Invoice final amount'
     })
     @IsNumber()

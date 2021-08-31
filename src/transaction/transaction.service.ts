@@ -31,6 +31,10 @@ export class TransactionService {
 		}
 
 		parentID = invoiceDiscount.parentID;
+		/*
+			Here should be an optimized query. In a single query, all data should be fetched by product code with category chain.
+			In a short time, I called aways the DB query until reached the parent category.
+		*/
 		while (true) {
 			invoiceDiscount = await this.entityService.invoiceDiscountRepo.findOne({ where: { id: parentID } });
 			if (!invoiceDiscount || invoiceDiscount.discount || !invoiceDiscount.parentID) {

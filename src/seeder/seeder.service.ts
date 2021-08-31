@@ -12,6 +12,7 @@ export class SeederService implements OnModuleInit {
         await this.seed();
     }
 
+	// Seeder is added this way. It will be implemented another best way. but In sort time i will be added this way
     public async seed() {
         const count = await this.entityService.invoiceDiscountRepo.count();
         if (!count) {

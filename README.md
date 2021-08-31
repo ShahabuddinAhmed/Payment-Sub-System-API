@@ -34,6 +34,16 @@ $ yarn test:e2e
 $ yarn test:cov
 ```
 
+## Swagger UI Documentation
+
+[Swagger UI Doc](http://localhost:3000/api/v1/doc)
+
+## N.B
+```
+In the `invoice_discount` table, the column `name` is considered as both `product category name` or `product name`.
+In summary, All product `categories` and `products` are in the `invoice_discount` table.
+```
+
 ## License
 
-  Nest is [MIT licensed](LICENSE).
+Nest is [MIT licensed](LICENSE).

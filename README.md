@@ -40,7 +40,7 @@ $ yarn test:cov
 `username`: root
 `password`: root
 
-[Swagger UI Doc](http://0.0.0.0:8080/index.php)
+[phpmyadmin](http://0.0.0.0:8080/index.php)
 
 ## N.B
 

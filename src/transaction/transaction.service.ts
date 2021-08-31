@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Request } from 'express';
 import { InvoiceDiscountDto } from './dto/invoice-discount.dto';
 import { EntityService } from '../entity/entity.service';
 import { LoggerService } from '../logger/logger.service';
@@ -12,7 +11,7 @@ export class TransactionService {
         private readonly loggerService: LoggerService
     ) { }
 
-    public async checkInvoice(req: Request, invoiceDiscountDto: InvoiceDiscountDto): Promise<{errMessage: string; data: { discount: number }}> {
+    public async checkInvoice(invoiceDiscountDto: InvoiceDiscountDto): Promise<{errMessage: string; data: { discount: number }}> {
         const data: { discount: number } = { discount: -1 };
 		let parentID: number;
 

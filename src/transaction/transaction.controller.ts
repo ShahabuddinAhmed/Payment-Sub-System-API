@@ -1,13 +1,12 @@
 import {
     Controller, UseInterceptors, ClassSerializerInterceptor, Post, HttpStatus, HttpCode,
-    Req, Body, Get, BadRequestException
+    Body, BadRequestException
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags, ApiOperation } from '@nestjs/swagger';
 import { TransactionService } from './transaction.service';
 import { LoggerService } from '../logger/logger.service';
 import { InvoiceDiscountDto } from './dto/invoice-discount.dto';
 import { InvoiceDiscountSerializer } from './serializer/invoice-discount.serializer';
-import { Request } from 'express';
 
 @ApiTags('Transaction')
 @Controller('transaction')
@@ -22,8 +21,8 @@ export class TransactionController {
     @HttpCode(HttpStatus.OK)
     @ApiOperation({ summary: 'Check Invoice Discount' })
     @ApiCreatedResponse({})
-    async checkInvoice(@Req() req: Request, @Body() invoiceDiscountDto: InvoiceDiscountDto): Promise<InvoiceDiscountSerializer> {
-        const { errMessage, data } = await this.authService.checkInvoice(req, invoiceDiscountDto);
+    async checkInvoice(@Body() invoiceDiscountDto: InvoiceDiscountDto): Promise<InvoiceDiscountSerializer> {
+        const { errMessage, data } = await this.authService.checkInvoice(invoiceDiscountDto);
         if (errMessage) {
             this.loggerService.error(errMessage, 'transaction.handler.checkInvoice');
             throw new BadRequestException(errMessage);

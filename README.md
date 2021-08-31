@@ -1,4 +1,4 @@
-# Payment-Sub-System
+# Payment-Sub-System-API
 Payment Sub System API with NestJS
 
 ## Description
@@ -7,7 +7,7 @@ Payment Sub System API with NestJS
 
 1. Clone from git
 
-2. cd into Payment-Sub-System
+2. cd into Payment-Sub-System-API
 
 3. run `yarn install` to install all dependencies
 

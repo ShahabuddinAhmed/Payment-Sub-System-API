@@ -1,49 +1,32 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Repository } from 'typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { TransactionService } from './transaction.service';
-import { EntityModule } from '../entity/entity.module';
 import { EntityService } from '../entity/entity.service';
+import { LoggerService } from '../logger/logger.service';
 import { InvoiceDiscountEntity } from '../entity/entities/invoice-discount.entity';
 import { TransactionEntity } from '../entity/entities/transaction.entity';
-import { Repository } from 'typeorm';
-import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
+import { MockType, repositoryMockFactory } from '../utils/utils.helper';
 
 describe('TransactionService', () => {
     let transactionService: TransactionService;
+	let invoiceDiscountMockRepo: MockType<Repository<InvoiceDiscountEntity>>;
+	let transactionMockRepo: MockType<Repository<TransactionEntity>>;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            imports: [
-                TypeOrmModule.forRootAsync({
-                    useFactory: async () => ({
-                        type: 'mysql',
-                        host: '172.31.0.1',
-                        port: 3306,
-                        username: 'root',
-                        password: 'root',
-                        database: 'payment',
-                        entities: [InvoiceDiscountEntity, TransactionEntity],
-                        synchronize: true,
-                        extra: {
-                            connectionLimit: 10
-                        }
-                    })
-                }),
-                EntityModule
-            ],
             providers: [
                 TransactionService,
-                {
-                    provide: getRepositoryToken(InvoiceDiscountEntity),
-                    useClass: Repository
-                },
-                {
-                    provide: getRepositoryToken(TransactionEntity),
-                    useClass: Repository
-                }
+				EntityService,
+				LoggerService,
+                { provide: getRepositoryToken(InvoiceDiscountEntity), useFactory: repositoryMockFactory },
+                { provide: getRepositoryToken(TransactionEntity), useFactory: repositoryMockFactory },
             ],
         }).compile();
 
         transactionService = module.get<TransactionService>(TransactionService);
+		invoiceDiscountMockRepo = module.get(getRepositoryToken(InvoiceDiscountEntity));
+		transactionMockRepo = module.get(getRepositoryToken(TransactionEntity));
     });
 
     it('should be defined', () => {

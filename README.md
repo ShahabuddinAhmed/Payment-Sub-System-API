@@ -15,10 +15,10 @@ Payment Sub System API with NestJS
 
 ```bash
 # development mode with Dockerfile.dev
-$ dokcer-compose up
+$ docker-compose up
 
 # production mode with Dockerfile
-$ dokcer-compose up
+$ docker-compose up
 ```
 
 ## Test
